@@ -2,6 +2,7 @@ import os
 import random
 import discord
 from discord.ext import commands
+from discord import FFmpegPCMAudio
 from secrettoken import *
 import requests
 import json
@@ -75,7 +76,9 @@ async def on_member_remove(member):
 async def join(ctx):
     if (ctx.author.voice):
         channel = ctx.message.author.voice.channel
-        await channel.connect()
+        voice = await channel.connect()
+        source = FFmpegPCMAudio('piano.wav')
+        player = voice.play(source)
     else:
         await ctx.send("You are not in a voice channel, you must be in a voice channel to run this command.")
 
